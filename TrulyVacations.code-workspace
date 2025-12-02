@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "TrulyVacations"
+		},
+		{
+			"path": "./.github"
 		}
 	],
 	"settings": {}
