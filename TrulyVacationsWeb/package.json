@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@strapi/client": "^1.6.0",
+    "@strapi/strapi": "^5.31.2",
     "astro": "^5.16.3"
   }
 }
