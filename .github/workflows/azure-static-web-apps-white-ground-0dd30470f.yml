@@ -22,8 +22,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '24.x'
-      - run: npm install
-      - run: npm run build
       - name: Deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
