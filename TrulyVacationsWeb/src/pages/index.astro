@@ -1,21 +1,22 @@
 ---
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
 import strapi from "../lib/strapi";
+import Layout from "../layouts/Layout.astro";
+import Carousel from "../components/Carousel.astro";
 
 const posts = await strapi.collection("posts").find();
+---
 
 <Layout>
-	<body>
-		<main>
-			<ul>
-				{posts.data.map((post) => (
+	<main>
+		<Carousel />
+		<ul>
+			{
+				posts.data.map((post) => (
 					<li>
 						<a href={`/blog/${post.slug}/`}>{post.Title}</a>
 					</li>
-				))}
-			</ul>
-		</main>
-	</body>
-</Layout>;
----
+				))
+			}
+		</ul>
+	</main>
+</Layout>

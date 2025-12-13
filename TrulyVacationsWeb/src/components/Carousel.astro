@@ -1,0 +1,51 @@
+---
+const images = [
+  "https://picsum.photos/id/1018/1200/800",
+  "https://picsum.photos/id/1015/1200/800",
+  "https://picsum.photos/id/1019/1200/800",
+  "https://picsum.photos/id/1016/1200/800",
+];
+---
+
+<div class="relative w-full h-[80vh] overflow-hidden shadow-2xl group">
+  {
+    images.map((src, index) => (
+      <div
+        class={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          index === 0 ? "opacity-100 z-10" : "opacity-0 z-0"
+        } slide`}
+        data-index={index}
+      >
+        <img
+          src={src}
+          alt={`Slide ${index + 1}`}
+          class="w-full h-full object-cover"
+        />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const slides = document.querySelectorAll(".slide");
+  let currentIndex = 0;
+
+  const showSlide = (index: number) => {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.remove("opacity-0", "z-0");
+        slide.classList.add("opacity-100", "z-10");
+      } else {
+        slide.classList.remove("opacity-100", "z-10");
+        slide.classList.add("opacity-0", "z-0");
+      }
+    });
+  };
+
+  const nextSlide = () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  };
+
+  setInterval(nextSlide, 10000);
+</script>
