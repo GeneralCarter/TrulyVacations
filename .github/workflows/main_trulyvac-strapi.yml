@@ -18,12 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: List files for debugging
+        run: ls -R
+
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
           node-version: '24.x'
 
       - name: npm install, build, and test
+        working-directory: TrulyVacations
         run: |
           npm install
           npm run build --if-present
@@ -33,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: TrulyVacations
 
   deploy:
     runs-on: ubuntu-latest
