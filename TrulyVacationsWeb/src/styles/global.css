@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-mycolor: #7fd68a;
+}
+
 :root {
   --main-color: rgba(127, 214, 138, 1);
 }

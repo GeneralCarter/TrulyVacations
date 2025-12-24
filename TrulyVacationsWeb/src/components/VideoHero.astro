@@ -1,0 +1,68 @@
+---
+import snowMountainVideo from "../assets/SnowMountain.mp4";
+import snowMountainPoster from "../assets/SnowMountain.png";
+---
+
+<div class="relative w-full h-screen overflow-hidden">
+  <!-- Video Background -->
+  <video
+    autoplay
+    loop
+    muted
+    playsinline
+    class="absolute top-0 left-0 w-full h-full object-cover"
+    poster={snowMountainPoster.src}
+  >
+    <source src={snowMountainVideo} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black/40"></div>
+  <!-- Content -->
+  <div
+    class="relative z-10 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8"
+  >
+    <h1
+      class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-6 animate-fade-in-up"
+    >
+      Experience the <span class="text-blue-400">Extraordinary</span>
+    </h1>
+    <p
+      class="max-w-2xl text-xl text-gray-200 mb-10 animate-fade-in-up delay-100"
+    >
+      Discover handpicked luxury destinations for your next unforgettable
+      journey.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up delay-200">
+      <a
+        href="/properties"
+        class="px-8 py-3.5 text-base font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-1"
+      >
+        Explore Properties
+      </a>
+      <a
+        href="/destinations"
+        class="px-8 py-3.5 text-base font-semibold text-white border-2 border-white/30 bg-white/10 backdrop-blur-sm rounded-full hover:bg-white/20 transition-all duration-300"
+      >
+        View Destinations
+      </a>
+    </div>
+  </div>
+  <!-- Scroll Down Indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+  >
+    <svg
+      class="w-6 h-6 text-white/70"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+</div>

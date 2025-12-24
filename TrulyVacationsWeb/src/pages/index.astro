@@ -1,22 +1,16 @@
 ---
 import strapi from "../lib/strapi";
 import Layout from "../layouts/Layout.astro";
-import Carousel from "../components/Carousel.astro";
+import VideoHero from "../components/VideoHero.astro";
+import LocationGrid from "../components/LocationGrid.astro";
 
 const posts = await strapi.collection("posts").find();
+const locations = await strapi.collection("locations").find();
 ---
 
 <Layout>
 	<main>
-		<Carousel />
-		<ul>
-			{
-				posts.data.map((post) => (
-					<li>
-						<a href={`/blog/${post.slug}/`}>{post.Title}</a>
-					</li>
-				))
-			}
-		</ul>
+		<VideoHero />
+		<LocationGrid locations={locations.data} />
 	</main>
 </Layout>
