@@ -35,8 +35,8 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          npm prune --production
           cd TrulyVacations
+          npm prune --production
           zip -qr ../release.zip . -x "*.git*"
           cd ..
 
