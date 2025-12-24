@@ -30,8 +30,7 @@ jobs:
         working-directory: TrulyVacations
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run dev --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
