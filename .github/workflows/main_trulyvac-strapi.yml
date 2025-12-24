@@ -35,8 +35,9 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
+          npm prune --production
           cd TrulyVacations
-          zip -r ../release.zip .
+          zip -qr ../release.zip . -x "*.git*"
           cd ..
 
       - name: Upload artifact for deployment job
@@ -72,4 +73,5 @@ jobs:
           app-name: 'trulyvac-strapi'
           slot-name: 'Production'
           package: release.zip
+          clean: true
           
