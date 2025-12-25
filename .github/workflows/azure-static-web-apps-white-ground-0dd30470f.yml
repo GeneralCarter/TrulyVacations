@@ -27,7 +27,7 @@ jobs:
           lfs: false
       - uses: actions/setup-node@v3
         with:
-          node-version: '24.x'
+          node-version: '22.x'
       - name: Install and Build
         run: |
           npm ci
@@ -42,9 +42,9 @@ jobs:
           skip_app_build: true
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/TrulyVacationsWeb" # App source code path
+          app_location: "/TrulyVacationsWeb/dist" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
+          output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
