@@ -1,0 +1,92 @@
+---
+import type { OwnerRezListing } from "../lib/ownerRez";
+
+interface Props {
+  listing: OwnerRezListing;
+}
+
+const { listing } = Astro.props;
+
+const heroImage =
+  listing.photos && listing.photos.length > 0
+    ? listing.photos[0].large_url
+    : "https://placehold.co/600x400?text=No+Image";
+
+const title =
+  listing.descriptions.headline || `Property ${listing.property_id}`;
+const minRate = listing.nightly_rate_min;
+const maxRate = listing.nightly_rate_max;
+const priceDisplay =
+  minRate === maxRate ? `$${minRate}` : `$${minRate}-${maxRate}`;
+
+const amenityList = listing.amenity_call_outs
+  ? listing.amenity_call_outs.map((a) => a.text).slice(0, 5)
+  : [];
+---
+
+<div class="flex flex-col md:flex-row border-b border-gray-200 py-8 gap-6">
+  {/* Left: Image */}
+  <div
+    class="w-full md:w-2/5 rounded-lg shadow-md overflow-hidden relative aspect-[4/3] md:aspect-auto"
+  >
+    <img
+      src={heroImage}
+      alt={title}
+      class="w-full h-full object-cover absolute md:static inset-0"
+      loading="lazy"
+    />
+  </div>
+
+  {/* Right: Content */}
+  <div class="w-full md:w-3/5 flex flex-col gap-2">
+    <div class="flex flex-wrap justify-between items-baseline gap-2">
+      <h2
+        class="text-2xl font-bold text-[#00C1C0] uppercase tracking-wide leading-tight"
+      >
+        {title}
+      </h2>
+      <span class="text-xl font-semibold text-gray-600 whitespace-nowrap">
+        {priceDisplay}<span class="text-sm font-normal text-gray-500"
+          >/night</span
+        >
+      </span>
+    </div>
+
+    <div class="text-sm text-gray-500 font-semibold mt-1">
+      Size – {listing.bedroom_count} Bedroom • {listing.bathroom_count} Bathroom
+      • Sleeps {listing.sleeps_max}
+    </div>
+
+    {
+      amenityList.length > 0 && (
+        <div class="text-sm text-gray-500 flex flex-wrap items-center gap-2">
+          <span class="font-semibold">Amenities –</span>
+          <div>
+            {listing.amenity_call_outs.map((a) => (
+              <span class="mx-1">
+                <i class={`${a.icon}`} />
+                {a.text}
+              </span>
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    <p class="text-gray-600 my-4 line-clamp-3 leading-relaxed">
+      {listing.descriptions.description}
+    </p>
+
+    <div class="flex flex-wrap gap-2 mt-auto pt-2">
+      {
+        ["PHOTOS", "RATES", "AVAILABILITY", "DETAILS", "INQUIRE"].map(
+          (label) => (
+            <button class="border border-[#00C1C0] text-[#00C1C0] px-4 py-2 text-xs font-bold rounded-[3px] hover:bg-[#00C1C0] hover:text-white transition-colors duration-200 uppercase tracking-wider">
+              {label}
+            </button>
+          ),
+        )
+      }
+    </div>
+  </div>
+</div>
