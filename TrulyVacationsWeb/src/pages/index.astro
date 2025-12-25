@@ -9,22 +9,21 @@ import { ownerRez } from "../lib/ownerRez";
 const posts = await strapi.collection("posts").find();
 const locations = await strapi.collection("locations").find();
 const listingsResponse = await ownerRez.getListings(true);
-const properties = listingsResponse.items;
+const listings = listingsResponse.items;
 ---
 
 <Layout>
 	<main>
 		<VideoHero />
 
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-			<h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+			<h2 class="text-4xl font-bold text-gray-900 mb-8 text-center">
 				Featured Properties
 			</h2>
 			<div class="flex flex-col gap-2">
-				{properties.map((property) => <PropertyCard listing={property} />)}
+				{listings.map((listing) => <PropertyCard listing={listing} />)}
 			</div>
 		</div>
-
 		<LocationGrid locations={locations.data} />
 	</main>
 </Layout>

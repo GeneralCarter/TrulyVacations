@@ -1,26 +1,29 @@
 ---
-import type { OwnerRezListing } from "../lib/ownerRez";
+import type { OwnerRezListing } from "../lib/ownerRezTypes";
+import { ownerRez } from "../lib/ownerRez";
 
 interface Props {
   listing: OwnerRezListing;
 }
 
 const { listing } = Astro.props;
+const propertyDetails = await ownerRez.getProperty(listing.property_id);
+const fullProperty = { ...listing, ...propertyDetails };
 
 const heroImage =
-  listing.photos && listing.photos.length > 0
-    ? listing.photos[0].large_url
+  fullProperty.photos && fullProperty.photos.length > 0
+    ? fullProperty.photos[0].large_url
     : "https://placehold.co/600x400?text=No+Image";
 
 const title =
-  listing.descriptions.headline || `Property ${listing.property_id}`;
-const minRate = listing.nightly_rate_min;
-const maxRate = listing.nightly_rate_max;
+  fullProperty.descriptions.headline || `Property ${fullProperty.property_id}`;
+const minRate = fullProperty.nightly_rate_min;
+const maxRate = fullProperty.nightly_rate_max;
 const priceDisplay =
   minRate === maxRate ? `$${minRate}` : `$${minRate}-${maxRate}`;
 
-const amenityList = listing.amenity_call_outs
-  ? listing.amenity_call_outs.map((a) => a.text).slice(0, 5)
+const amenityList = fullProperty.amenity_call_outs
+  ? fullProperty.amenity_call_outs.map((a) => a.text).slice(0, 5)
   : [];
 ---
 
@@ -41,7 +44,14 @@ const amenityList = listing.amenity_call_outs
   <div class="w-full md:w-3/5 flex flex-col gap-2">
     <div class="flex flex-wrap justify-between items-baseline gap-2">
       <h2
-        class="text-2xl font-bold text-[#00C1C0] uppercase tracking-wide leading-tight"
+        class="text-2xl font-bold text-primary uppercase tracking-wide leading-tight"
+      >
+        <a href={`/property/${listing.property_id}`} class="hover:underline">
+          {fullProperty.name}
+        </a>
+      </h2>
+      <h2
+        class="text-md font-bold text-gray-600 uppercase tracking-wide leading-tight"
       >
         {title}
       </h2>
@@ -53,8 +63,9 @@ const amenityList = listing.amenity_call_outs
     </div>
 
     <div class="text-sm text-gray-500 font-semibold mt-1">
-      Size – {listing.bedroom_count} Bedroom • {listing.bathroom_count} Bathroom
-      • Sleeps {listing.sleeps_max}
+      Size – {fullProperty.bedroom_count} Bedroom • {
+        fullProperty.bathroom_count
+      } Bathroom • Sleeps {fullProperty.sleeps_max}
     </div>
 
     {
@@ -62,7 +73,7 @@ const amenityList = listing.amenity_call_outs
         <div class="text-sm text-gray-500 flex flex-wrap items-center gap-2">
           <span class="font-semibold">Amenities –</span>
           <div>
-            {listing.amenity_call_outs.map((a) => (
+            {fullProperty.amenity_call_outs.map((a) => (
               <span class="mx-1">
                 <i class={`${a.icon}`} />
                 {a.text}
@@ -74,14 +85,14 @@ const amenityList = listing.amenity_call_outs
     }
 
     <p class="text-gray-600 my-4 line-clamp-3 leading-relaxed">
-      {listing.descriptions.description}
+      {fullProperty.descriptions.description}
     </p>
 
     <div class="flex flex-wrap gap-2 mt-auto pt-2">
       {
         ["PHOTOS", "RATES", "AVAILABILITY", "DETAILS", "INQUIRE"].map(
           (label) => (
-            <button class="border border-[#00C1C0] text-[#00C1C0] px-4 py-2 text-xs font-bold rounded-[3px] hover:bg-[#00C1C0] hover:text-white transition-colors duration-200 uppercase tracking-wider">
+            <button class="border border-primary text-primary px-4 py-2 text-xs font-bold rounded-[3px] hover:bg-primary hover:text-white transition-colors duration-200 uppercase tracking-wider">
               {label}
             </button>
           ),
