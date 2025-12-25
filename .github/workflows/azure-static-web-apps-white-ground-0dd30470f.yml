@@ -12,6 +12,8 @@ on:
 env:
   STRAPI_URL: ${{ vars.STRAPI_URL }}
   STRAPI_TOKEN: ${{ secrets.STRAPI_TOKEN }}
+  OWNERREZ_USERNAME: ${{ vars.OWNERREZ_USERNAME }}
+  OWNERREZ_PASSWORD: ${{ secrets.OWNERREZ_PASSWORD }}
 
 jobs:
   build_and_deploy_job:
