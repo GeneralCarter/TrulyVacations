@@ -58,7 +58,7 @@ const otherPhotos =
 ---
 
 <Layout>
-  <main class="font-sans text-gray-700 pb-20">
+  <main class="font-sans text-gray-700">
     {/* Hero Section */}
     <div class="relative h-[60vh] w-full overflow-hidden bg-gray-900">
       {
@@ -74,171 +74,297 @@ const otherPhotos =
           </div>
         )
       }
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-8 sm:p-12 max-w-7xl mx-auto w-full"
-      >
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-2 shadow-sm">
-          {property.descriptions.headline}
-        </h1>
-        <div class="text-white/90 text-lg flex gap-4 items-center">
-          <span>{property.address.city}, {property.address.state}</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
-          <span>{property.bedroom_count} Bedrooms</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
-          <span>{property.bathroom_count} Bathrooms</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-white/60"></span>
-          <span>Sleeps {property.sleeps_max}</span>
-        </div>
-      </div>
     </div>
+  </main>
 
-    <div
-      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12"
-    >
-      {/* Left Output: Main Content */}
-      <div class="lg:col-span-2 space-y-12">
-        {/* Description */}
-        <section>
-          <h2
-            class="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-primary pl-4"
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-3 gap-12"
+  >
+    {/* Left Output: Main Content */}
+    <div class="lg:col-span-2 space-y-6">
+      {/* Header Info (Moved) */}
+      <section class="space-y-2">
+        <h4
+          class="text-lg md:text-xl pb-2 font-semibold text-gray-600 leading-tight"
+        >
+          {property.descriptions.headline}
+        </h4>
+
+        <div class="flex flex-wrap gap-4 text-gray-600 text-md items-center">
+          <span class="font-medium text-gray-900"
+            >{property.address.city}, {property.address.state}</span
           >
-            About this Property
-          </h2>
-          <div
-            class="prose prose-lg text-gray-600 leading-relaxed whitespace-pre-line"
-          >
-            {property.descriptions.description}
-          </div>
-        </section>
+          <span class="hidden sm:inline w-1.5 h-1.5 rounded-full bg-gray-300"
+          ></span>
 
-        {/* Amenities */}
-        <section>
-          <h2
-            class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4"
-          >
-            Amenities
-          </h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-            {
-              property.amenity_call_outs?.map((amenity) => (
-                <div class="flex items-center gap-3 text-gray-700 bg-gray-50 p-3 rounded-lg">
-                  <i
-                    class={`${amenity.icon} text-primary text-xl w-6 text-center`}
-                  />
-                  <span class="font-medium">{amenity.text}</span>
-                </div>
-              ))
-            }
-          </div>
-        </section>
+          <span class="flex items-center gap-1">
+            <span>{property.bedroom_count}</span>
+            <span class="text-gray-500">Bedrooms</span>
+          </span>
+          <span class="hidden sm:inline w-1.5 h-1.5 rounded-full bg-gray-300"
+          ></span>
 
-        {/* Gallery Preview */}
-        {
-          otherPhotos.length > 0 && (
-            <section>
-              <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4">
-                Photo Gallery
-              </h2>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {otherPhotos.map((photo) => (
-                  <div class="aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-                    <img
-                      src={photo.large_url}
-                      alt={photo.caption}
-                      class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                ))}
-              </div>
-            </section>
-          )
-        }
+          <span class="flex items-center gap-1">
+            <span>{property.bathroom_count}</span>
+            <span class="text-gray-500">Bathrooms</span>
+          </span>
+          <span class="hidden sm:inline w-1.5 h-1.5 rounded-full bg-gray-300"
+          ></span>
 
-        <!-- TrulyVacations_Book -->
-        <!-- OwnerRez Booking/Inquiry widget for Mountain Valley Escape -->
+          <span class="flex items-center gap-1">
+            <span class="text-gray-500">Sleeps</span>
+            <span>{property.sleeps_max}</span>
+          </span>
+        </div>
+
         <div
-          class="ownerrez-widget"
+          class="flex flex-col sm:flex-row gap-8 py-2 border-y border-gray-100"
+        >
+          <div>
+            <span
+              class="block text-sm font-bold text-gray-600 uppercase tracking-wider mb-1"
+              >Check-in: {property.check_in || "4:00 PM"}</span
+            >
+          </div>
+          <div>
+            <span
+              class="block text-sm font-bold text-gray-600 uppercase tracking-wider mb-1"
+              >Check-out: {property.check_out || "10:00 AM"}</span
+            >
+          </div>
+        </div>
+
+        {/* Featured Amenities */}
+        <div class="flex flex-wrap gap-3">
+          {
+            property.amenity_call_outs?.map((amenity) => (
+              <div class="flex items-center gap-3 text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-100/50">
+                <i
+                  class={`${amenity.icon} text-primary text-xl w-6 text-center`}
+                />
+                <span class="font-medium">
+                  {amenity.text.replace(/&ndash;/g, "-")}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <hr class="my-6 border-gray-100" />
+      {/* Description */}
+      <section>
+        <h2
+          class="text-2xl font-bold text-gray-900 mb-4 border-l-4 border-primary pl-4"
+        >
+          About this Property
+        </h2>
+        <div
+          class="prose prose-lg text-gray-600 leading-relaxed whitespace-pre-line"
+        >
+          {property.descriptions.description}
+        </div>
+      </section>
+
+      <hr class="my-6 border-gray-100" />
+      {/* Amenities */}
+      <section>
+        <h2
+          class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4"
+        >
+          Amenities
+        </h2>
+        <div class="border border-gray-200 rounded-lg overflow-hidden">
+          {
+            property.amenity_categories.map((category, index) => (
+              <div
+                class={`flex flex-col sm:flex-row border-b border-gray-200 last:border-b-0 ${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                }`}
+              >
+                <div class="sm:w-1/3 py-1 px-4 font-bold text-gray-900 border-b sm:border-b-0 sm:border-r border-gray-200 bg-gray-50/50">
+                  {category.caption}
+                </div>
+                <div class="sm:w-2/3 py-1 px-4 text-gray-700">
+                  <ul
+                    class={`grid gap-2 text-sm ${
+                      ["Bathrooms", "Where you'll sleep"].includes(
+                        category.caption,
+                      )
+                        ? "grid-cols-1"
+                        : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    }`}
+                  >
+                    {category.amenities.map((amenity) => (
+                      <li class="flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                        <span>{amenity.text.replace(/&ndash;/g, "-")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <hr class="my-6 border-gray-100" />
+      {/* Rates */}
+      <section>
+        <h2
+          class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4"
+        >
+          Rates
+        </h2>
+        <div class="overflow-hidden border border-gray-200 rounded-lg mb-6">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                >
+                  Season
+                </th>
+                <th
+                  scope="col"
+                  class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                >
+                  Nightly Rate
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td
+                  class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                >
+                  Standard Rate
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {formatCurrency(property.nightly_rate_min)} - {
+                    formatCurrency(property.nightly_rate_max)
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <h3 class="font-bold text-gray-900 mb-2">Cancellation Policy</h3>
+          <p class="text-gray-700 whitespace-pre-line">
+            {property.cancellation_policy}
+          </p>
+        </div>
+      </section>
+
+      {/* Gallery Preview */}
+      {
+        otherPhotos.length > 0 && (
+          <hr class="my-6 border-gray-100" />
+          <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4">
+              Photo Gallery
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {otherPhotos.map((photo) => (
+                <div class="aspect-square rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                  <img
+                    src={photo.large_url}
+                    alt={photo.caption}
+                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <hr class="my-6 border-gray-100" />
+      <!-- TrulyVacations_Book -->
+      <!-- OwnerRez Booking/Inquiry widget for Mountain Valley Escape -->
+      <section id="book-now">
+        <h2
+          class="text-2xl font-bold text-gray-900 mb-6 border-l-4 border-primary pl-4"
+        >
+          Book Now
+        </h2>
+        <div
+          class="ownerrez-widget p-2"
           data-propertyId="7d667893b0e444e8959f4c61cc99f327"
           data-widget-type="TrulyVacations_Book - Booking/Inquiry"
           data-widgetId="337a4cff-81d2-4a47-bf0e-3341f5b6625d"
         >
         </div>
-        <!-- <script src="/scripts/ownerRezWidget.js" is:inline></script> -->
+        <script src="https://app.ownerrez.com/widget.js" is:inline></script>
+      </section>
+    </div>
+
+    {/* Right Output: Sidebar (Booking & Map) */}
+    <div class="space-y-8">
+      {/* Booking Card */}
+      <div
+        class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 sticky top-24"
+      >
+        <div class="mb-6">
+          <p class="text-gray-500 text-sm font-medium uppercase tracking-wider">
+            Starting at
+          </p>
+          <div class="flex items-baseline gap-1">
+            <span class="text-3xl font-bold text-primary"
+              >{formatCurrency(property.nightly_rate_min)}</span
+            >
+            <span class="text-gray-400">/ night</span>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+            <a
+              href="#book-now"
+              class="block w-full text-center bg-primary text-white font-bold py-3 px-4 rounded-xl hover:bg-green-600 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              Check Availability
+            </a>
+            <a
+              href="#book-now"
+              class="block w-full text-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition"
+            >
+              Ask a Question
+            </a>
+        </div>
+
+        <hr class="my-6 border-gray-100" />
+
+        <!-- MVE-MonthCalendar -->
+        <!-- OwnerRez Single Month Calendar widget for Mountain Valley Escape -->
+        <div
+          class="ownerrez-widget"
+          data-propertyId="7d667893b0e444e8959f4c61cc99f327"
+          data-widget-type="MVE-MonthCalendar - Single Month Calendar"
+          data-widgetId="86cdf0f243904daca051ffe2632a04f7"
+        >
+        </div>
         <script src="https://app.ownerrez.com/widget.js" is:inline></script>
       </div>
 
-      {/* Right Output: Sidebar (Booking & Map) */}
-      <div class="space-y-8">
-        {/* Booking Card */}
-        <div
-          class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 sticky top-24"
-        >
-          <div class="mb-6">
-            <p
-              class="text-gray-500 text-sm font-medium uppercase tracking-wider"
-            >
-              Starting at
-            </p>
-            <div class="flex items-baseline gap-1">
-              <span class="text-3xl font-bold text-primary"
-                >{formatCurrency(property.nightly_rate_min)}</span
-              >
-              <span class="text-gray-400">/ night</span>
-            </div>
-          </div>
-
-          <div class="space-y-3">
-            <button
-              class="w-full bg-primary text-white font-bold py-3 px-4 rounded-xl hover:bg-green-600 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-            >
-              Check Availability
-            </button>
-            <button
-              class="w-full bg-white text-gray-700 font-bold py-3 px-4 rounded-xl border-2 border-gray-200 hover:border-primary hover:text-primary transition"
-            >
-              Ask a Question
-            </button>
-          </div>
-
-          <hr class="my-6 border-gray-100" />
-
-          <div class="space-y-4 text-sm text-gray-600">
-            <div class="flex justify-between">
-              <span>Check-in</span>
-              <span class="font-semibold text-gray-900"
-                >{property.check_in || "4:00 PM"}</span
-              >
-            </div>
-            <div class="flex justify-between">
-              <span>Check-out</span>
-              <span class="font-semibold text-gray-900"
-                >{property.check_out || "10:00 AM"}</span
-              >
-            </div>
-            <div class="flex justify-between">
-              <span>Max Guests</span>
-              <span class="font-semibold text-gray-900"
-                >{property.max_guests}</span
-              >
-            </div>
-          </div>
-        </div>
-
-        {/* Map Placeholder */}
-        <div
-          class="bg-gray-100 rounded-2xl p-4 h-64 flex items-center justify-center text-gray-400"
-        >
-          <div class="text-center">
-            <p class="mb-2 font-semibold">Location</p>
-            <p class="text-xs">
-              {property.address.city}, {property.address.state}
-            </p>
-            {
-              /* Map integration could go here using property.latitude/longitude */
-            }
-          </div>
+      {/* Map Placeholder */}
+      <div
+        class="bg-gray-100 rounded-2xl p-4 h-64 flex items-center justify-center text-gray-400"
+      >
+        <div class="text-center">
+          <p class="mb-2 font-semibold">Location</p>
+          <p class="text-xs">
+            {property.address.city}, {property.address.state}
+          </p>
+          {
+            /* Map integration could go here using property.latitude/longitude */
+          }
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </Layout>
