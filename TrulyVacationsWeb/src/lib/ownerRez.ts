@@ -52,6 +52,29 @@ export class OwnerRezApi {
     }
   }
 
+  async getProperties(): Promise<OwnerRezProperty[]> {
+    const url = `${this.baseUrl}/properties`;
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": this.getAuthHeader(),
+          "Accept": "application/json"
+        }
+      });
+      if (!response.ok) throw new Error(`Failed to fetch properties: ${response.status}`);
+      const data = await response.json();
+      // data might be { items: [...] } or array, checking types... 
+      // Usually OwnerRez returns { items: [], count: ... } for lists.
+      // Let's assume standard response wrapper similar to listings or check types.
+      // For now, returning data.items assuming standard OwnerRez list pattern.
+      return (data as any).items || data;
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+      return [];
+    }
+  }
+
   async getProperty(id: number): Promise<OwnerRezProperty> {
     const url = `${this.baseUrl}/properties/${id}`;
 

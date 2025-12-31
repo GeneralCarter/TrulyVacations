@@ -1,29 +1,50 @@
 ---
 import strapi from "../lib/strapi";
 import Layout from "../layouts/Layout.astro";
-import PropertyCard from "../components/PropertyCard.astro";
 import VideoHero from "../components/VideoHero.astro";
+import PropertyCardList from "../components/PropertyCardList.astro";
 import LocationGrid from "../components/LocationGrid.astro";
 import { ownerRez } from "../lib/ownerRez";
 
 const posts = await strapi.collection("posts").find();
+const listings = await ownerRez.getListings(true);
+const properties = await ownerRez.getProperties();
 const locations = await strapi.collection("locations").find();
-const listingsResponse = await ownerRez.getListings(true);
-const listings = listingsResponse.items;
 ---
 
 <Layout>
 	<main>
-		<VideoHero />
+		<section class="sticky top-0 h-screen -z-10">
+			<VideoHero />
+		</section>
 
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-			<h2 class="text-4xl font-bold text-gray-900 mb-8 text-center">
-				Featured Properties
-			</h2>
-			<div class="flex flex-col gap-2">
-				{listings.map((listing) => <PropertyCard listing={listing} />)}
-			</div>
-		</div>
+		<PropertyCardList title="Featured Properties" listings={listings.items} />
 		<LocationGrid locations={locations.data} />
 	</main>
+
+	<script>
+		import { gsap } from "gsap";
+		import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		const video = document.querySelector("video");
+		const heroSection = document.querySelector(".sticky");
+
+		if (video && heroSection) {
+			ScrollTrigger.create({
+				trigger: "#featured-properties-section",
+				start: "top top", // When content fully covers hero
+				onEnter: () => {
+					video.pause();
+					// Optional: hide to prevent painting
+					gsap.set(heroSection, { autoAlpha: 0 });
+				},
+				onLeaveBack: () => {
+					video.play();
+					gsap.set(heroSection, { autoAlpha: 1 });
+				},
+			});
+		}
+	</script>
 </Layout>

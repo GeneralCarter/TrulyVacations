@@ -1,0 +1,56 @@
+---
+import PropertyCard from "./PropertyCard.astro";
+
+interface Props {
+  title: string;
+  listings: any[];
+}
+
+const { title, listings } = Astro.props;
+---
+
+<section
+  id="featured-properties-section"
+  class="relative z-10 mx-auto overflow-hidden min-h-screen flex flex-col"
+>
+  <div
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow flex flex-col w-full"
+  >
+    <h2 class="text-4xl font-bold text-gray-900 mb-8 text-center">
+      {title}
+    </h2>
+    <div
+      id="featured-properties-list"
+      class="flex flex-col gap-2 mx-auto flex-grow justify-center w-full"
+    >
+      {listings.map((listing) => <PropertyCard listing={listing} />)}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate Featured Properties width
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#featured-properties-section",
+      start: "top bottom",
+      end: "top center",
+      scrub: true,
+    },
+  });
+
+  tl.fromTo(
+    "#featured-properties-section",
+    { width: "85%", borderRadius: "20px" },
+    { width: "100%", duration: 1, ease: "power1.inOut" },
+  ).to(
+    "#featured-properties-section",
+    { borderRadius: "0px", duration: 0.25, ease: "power1.inOut" },
+    "-=0.25",
+  );
+</script>

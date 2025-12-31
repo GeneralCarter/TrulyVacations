@@ -20,39 +20,41 @@ const getLocationImage = (index: number) => {
 };
 ---
 
-<div class="py-16 px-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
-  <div class="text-center mb-16">
-    <h2
-      class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4"
-    >
-      Destinations
-    </h2>
-    <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
-    <p class="mt-4 text-xl text-gray-500">
-      Discover our exclusive collection of destinations
-    </p>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {
-      locations.map((location, index) => (
-        <div class="relative group overflow-hidden rounded-2xl shadow-xl cursor-pointer">
-          <div class="aspect-w-16 aspect-h-9 w-full h-80">
-            <img
-              src={getLocationImage(index)}
-              alt={location.Name}
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
+<section class="w-full">
+  <div class="py-16 px-4 max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2
+        class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4"
+      >
+        Destinations
+      </h2>
+      <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      <p class="mt-4 text-xl text-gray-500">
+        Discover our exclusive collection of destinations
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {
+        locations.map((location, index) => (
+          <div class="relative group overflow-hidden rounded-2xl shadow-xl cursor-pointer">
+            <div class="aspect-w-16 aspect-h-9 w-full h-80">
+              <img
+                src={getLocationImage(index)}
+                alt={location.Name}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+              <h3 class="text-white text-3xl font-bold tracking-tight transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                {location.Name}
+              </h3>
+              <p class="text-gray-200 mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75">
+                Explore our exclusive properties
+              </p>
+            </div>
           </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-            <h3 class="text-white text-3xl font-bold tracking-tight transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-              {location.Name}
-            </h3>
-            <p class="text-gray-200 mt-2 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75">
-              Explore our exclusive properties
-            </p>
-          </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
-</div>
+</section>
